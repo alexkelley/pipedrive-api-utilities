@@ -6,6 +6,8 @@ import json
 import pprint
 from datetime import datetime
 
+from log_changes import write_to_log
+
 """
 Pipedrive API documentation: https://developers.pipedrive.com/v1
 """
@@ -226,6 +228,19 @@ def combine_activities():
 def get_org_field(org_id, field_id):
     query = 'https://api.pipedrive.com/v1/organizations'
     query += '/' + str(org_id)
+    query += '?api_token=' + API_KEY
+
+    h = httplib2.Http('.cache')
+    response, content = h.request(query, 'GET')
+    raw_json = json.loads(content.decode('utf-8'))
+    field_value = raw_json['data'][field_id]
+
+    return field_value
+
+
+def get_person_field(person_id, field_id):
+    query = 'https://api.pipedrive.com/v1/persons'
+    query += '/' + str(person_id)
     query += '?api_token=' + API_KEY
 
     h = httplib2.Http('.cache')
