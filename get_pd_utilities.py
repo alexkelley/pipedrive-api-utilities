@@ -257,7 +257,7 @@ def get_person_field(person_id, field_id):
 global API_KEY
 
 with open('api.secrets', 'r') as f:
-    API_KEY = f.read().strip() 
+    API_KEY = f.read().strip()
 
 ##################
 # Function Calls #
